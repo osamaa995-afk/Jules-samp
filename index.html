@@ -16,20 +16,29 @@
         <div class="game-container">
             <canvas id="gameCanvas" width="400" height="400"></canvas>
 
+            <!-- Menu / Level Selection -->
             <div id="menuOverlay" class="overlay">
-                <h1>SNAKE</h1>
-                <button id="startBtn" class="menu-btn">Play</button>
+                <h1>SNAKE PRO</h1>
+                <p>Select Level</p>
+                <div class="level-select">
+                    <button class="level-btn" data-level="classic">Classic</button>
+                    <button class="level-btn" data-level="box">Box</button>
+                    <button class="level-btn" data-level="maze">Maze</button>
+                </div>
+                <div class="loading-text" id="loadingText" style="display:none; margin-top: 10px;">Loading assets...</div>
             </div>
 
             <div id="pauseOverlay" class="overlay hidden">
                 <h2>PAUSED</h2>
                 <button id="resumeBtn" class="menu-btn">Resume</button>
+                <button id="quitBtn" class="menu-btn" style="background: #e74c3c; margin-top: 10px;">Menu</button>
             </div>
 
             <div id="gameOverOverlay" class="overlay hidden">
                 <h2>GAME OVER</h2>
                 <p id="finalScore">Score: 0</p>
                 <button id="restartBtn" class="menu-btn">Try Again</button>
+                <button id="menuBtn" class="menu-btn" style="background: #e74c3c; margin-top: 10px;">Menu</button>
             </div>
         </div>
 
