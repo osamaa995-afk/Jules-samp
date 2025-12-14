@@ -2,15 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Snake Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        <h1>Snake Game</h1>
-        <div id="score">Score: 0</div>
-        <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div class="game-wrapper">
+        <div class="header">
+            <div id="score">Score: 0</div>
+            <button id="pauseBtn" class="icon-btn">❚❚</button>
+        </div>
+
+        <div class="game-container">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+            <div id="menuOverlay" class="overlay">
+                <h1>SNAKE</h1>
+                <button id="startBtn" class="menu-btn">Play</button>
+            </div>
+
+            <div id="pauseOverlay" class="overlay hidden">
+                <h2>PAUSED</h2>
+                <button id="resumeBtn" class="menu-btn">Resume</button>
+            </div>
+
+            <div id="gameOverOverlay" class="overlay hidden">
+                <h2>GAME OVER</h2>
+                <p id="finalScore">Score: 0</p>
+                <button id="restartBtn" class="menu-btn">Try Again</button>
+            </div>
+        </div>
+
+        <div class="mobile-controls">
+            <button id="upBtn" class="control-btn">▲</button>
+            <div class="horizontal-controls">
+                <button id="leftBtn" class="control-btn">◀</button>
+                <button id="rightBtn" class="control-btn">▶</button>
+            </div>
+            <button id="downBtn" class="control-btn">▼</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
