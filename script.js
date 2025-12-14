@@ -96,20 +96,84 @@ function isGameOver() {
 }
 
 function clearScreen() {
-    ctx.fillStyle = 'black';
+    // Use the same color as the CSS background for seamless look
+    ctx.fillStyle = '#2c3e50';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function drawSnake() {
-    ctx.fillStyle = 'lime';
     for (let i = 0; i < snake.length; i++) {
-        ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize - 2, gridSize - 2);
+        const x = snake[i].x * gridSize + gridSize / 2;
+        const y = snake[i].y * gridSize + gridSize / 2;
+
+        ctx.fillStyle = i === 0 ? '#4CAF50' : '#8BC34A'; // Head is darker green, body is lighter
+
+        ctx.beginPath();
+        ctx.arc(x, y, gridSize / 2 - 1, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Draw eyes on head
+        if (i === 0) {
+            ctx.fillStyle = 'white';
+
+            // Eye offsets based on direction
+            let leftEyeX, leftEyeY, rightEyeX, rightEyeY;
+            const eyeOffset = gridSize / 4;
+            const eyeSize = 3;
+
+            if (dy === -1) { // Up
+                leftEyeX = x - eyeOffset; leftEyeY = y - eyeOffset;
+                rightEyeX = x + eyeOffset; rightEyeY = y - eyeOffset;
+            } else if (dy === 1) { // Down
+                leftEyeX = x - eyeOffset; leftEyeY = y + eyeOffset;
+                rightEyeX = x + eyeOffset; rightEyeY = y + eyeOffset;
+            } else if (dx === -1) { // Left
+                leftEyeX = x - eyeOffset; leftEyeY = y - eyeOffset;
+                rightEyeX = x - eyeOffset; rightEyeY = y + eyeOffset;
+            } else { // Right (default)
+                leftEyeX = x + eyeOffset; leftEyeY = y - eyeOffset;
+                rightEyeX = x + eyeOffset; rightEyeY = y + eyeOffset;
+            }
+
+            ctx.beginPath();
+            ctx.arc(leftEyeX, leftEyeY, eyeSize, 0, 2 * Math.PI);
+            ctx.arc(rightEyeX, rightEyeY, eyeSize, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Pupils
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(leftEyeX, leftEyeY, eyeSize / 2, 0, 2 * Math.PI);
+            ctx.arc(rightEyeX, rightEyeY, eyeSize / 2, 0, 2 * Math.PI);
+            ctx.fill();
+        }
     }
 }
 
 function drawFood() {
-    ctx.fillStyle = 'red';
-    ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 2, gridSize - 2);
+    const centerX = food.x * gridSize + gridSize / 2;
+    const centerY = food.y * gridSize + gridSize / 2;
+    const radius = gridSize / 2 - 2;
+
+    // Apple Body
+    ctx.fillStyle = '#FF5252'; // Nice Apple Red
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    ctx.fill();
+
+    // Stem
+    ctx.strokeStyle = '#795548'; // Brown
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY - radius);
+    ctx.lineTo(centerX, centerY - radius - 4);
+    ctx.stroke();
+
+    // Leaf
+    ctx.fillStyle = '#4CAF50'; // Green
+    ctx.beginPath();
+    ctx.ellipse(centerX + 3, centerY - radius - 2, 4, 2, Math.PI / 4, 0, 2 * Math.PI);
+    ctx.fill();
 }
 
 function gameLoop() {
